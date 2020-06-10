@@ -5,29 +5,42 @@ import { getSnapshot } from 'mobx-state-tree';
 import './assets/index.css';
 import App from './components/App';
 
-import { WishList } from './models/WishList';
+import { Group } from './models/Group';
 
 let initialState = {
-  items: [
-    {
-      name: 'Machine Gun Preacher',
-      price: 7.35,
-      image:
-        'https://www.gstatic.com/tv/thumb/v22vodart/8751039/p8751039_v_v8_ab.jpg',
+  users: {
+    a342: {
+      id: 'a342',
+      name: 'Homer',
+      gender: 'm',
     },
-    {
-      name: 'LEGO Mindstorms EV3',
-      price: 349.95,
-      image:
-        'https://images-na.ssl-images-amazon.com/images/I/71iQLKdNnpL._AC_SL1500_.jpg',
+    '5fc2': {
+      id: '5fc2',
+      name: 'Marge',
+      gender: 'f',
     },
-  ],
+    '663b': {
+      id: '663b',
+      name: 'Bart',
+      gender: 'm',
+    },
+    '65aa': {
+      id: '65aa',
+      name: 'Maggie',
+      gender: 'f',
+    },
+    ba32: {
+      id: 'ba32',
+      name: 'Lisa',
+      gender: 'f',
+    },
+  },
 };
 
-let wishList = WishList.create(initialState);
+let group = Group.create(initialState);
 
 function renderApp() {
-  ReactDOM.render(<App wishList={wishList} />, document.getElementById('root'));
+  ReactDOM.render(<App group={group} />, document.getElementById('root'));
 }
 
 renderApp();
@@ -39,9 +52,9 @@ if (module.hot) {
   });
 
   // new model definitions
-  module.hot.accept(['./models/WishList'], () => {
-    const snapshot = getSnapshot(wishList);
-    wishList = WishList.create(snapshot);
+  module.hot.accept(['./models/Group'], () => {
+    const snapshot = getSnapshot(group);
+    group = Group.create(snapshot);
 
     renderApp();
   });
