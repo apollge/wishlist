@@ -35,6 +35,8 @@ export const WishList = types
   }))
   .views((self) => ({
     get totalPrice() {
-      return self.items.reduce((sum, entry) => sum + entry.price, 0);
+      return (
+        self.items.reduce((sum, entry) => sum + entry.price, 0) * 1.12
+      ).toFixed(2);
     },
   }));
