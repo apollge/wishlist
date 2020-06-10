@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { onSnapshot } from 'mobx-state-tree';
+
 import './assets/index.css';
 import App from './components/App';
 
 import { WishList } from './models/WishList';
 
-const wishList = WishList.create({
+let initialState = {
   items: [
     {
       name: 'Machine Gun Preacher',
@@ -20,6 +22,21 @@ const wishList = WishList.create({
         'https://images-na.ssl-images-amazon.com/images/I/71iQLKdNnpL._AC_SL1500_.jpg',
     },
   ],
+};
+
+if (localStorage.getItem('wishlistapp')) {
+  const json = JSON.parse(localStorage.getItem('wishlistapp'));
+
+  // Check if the shape of the object is still the same
+  if (WishList.is(json)) {
+    initialState = json;
+  }
+}
+
+const wishList = WishList.create(initialState);
+
+onSnapshot(wishList, (snapshot) => {
+  localStorage.setItem('wishlistapp', JSON.stringify(snapshot));
 });
 
 ReactDOM.render(<App wishList={wishList} />, document.getElementById('root'));
