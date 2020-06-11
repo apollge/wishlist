@@ -15,8 +15,6 @@ class App extends Component {
     const { group } = this.props;
     const selectedUser = group.users.get(this.state.selectedUser);
 
-    console.log('group', group.users.values());
-
     return (
       <div className="App">
         <header className="App-header">
@@ -34,6 +32,9 @@ class App extends Component {
         </select>
 
         {selectedUser && <WishListView wishList={selectedUser.wishList} />}
+        {selectedUser && (
+          <button onClick={selectedUser.getSuggestions}>Suggestion</button>
+        )}
       </div>
     );
   }
